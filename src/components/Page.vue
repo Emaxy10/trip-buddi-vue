@@ -26,4 +26,18 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+import {ref, onMounted} from 'vue'
+
+
+onMounted( async() =>{
+    try{
+        const response = await axios.get('/api/places')
+       console.log(response.data) 
+    }catch(error){
+        console.error(error)
+    }
+})
+
+
 </script>

@@ -10,6 +10,8 @@ import { routes } from 'vue-router/auto-routes'
 import RegistrationPage from '@/pages/RegistrationPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import Page from '@/components/Page.vue'
+import AddPlace from '@/pages/AddPlace.vue'
+import { components } from 'vuetify/dist/vuetify-labs.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +30,12 @@ const router = createRouter({
       path:'/login',
       name:'login',
       component: LoginPage
+    },
+    {
+      path:'/place/add',
+      name:'add-place',
+      component: AddPlace,
+      
     }
   ],
 })

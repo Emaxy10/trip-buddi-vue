@@ -11,6 +11,8 @@ import RegistrationPage from '@/pages/RegistrationPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import Page from '@/components/Page.vue'
 import AddPlace from '@/pages/AddPlace.vue'
+import PlacesPage from '@/pages/PlacesPage.vue'
+import EditPlace from '@/pages/EditPlace.vue'
 import { components } from 'vuetify/dist/vuetify-labs.js'
 
 const router = createRouter({
@@ -35,6 +37,18 @@ const router = createRouter({
       path:'/place/add',
       name:'add-place',
       component: AddPlace,
+      
+    },
+    {
+      path:'/place/edit/:id',
+      name:'edit-place',
+      component: EditPlace,
+      
+    },
+    {
+      path:'/place',
+      name:'place',
+      component: PlacesPage,
       
     }
   ],

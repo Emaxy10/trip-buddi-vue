@@ -1,5 +1,7 @@
 <template>
+    <h2 class="ma-4"> Add a Place</h2>
     <v-sheet class="mx-auto" max-width="500">
+        
         <v-form @submit.prevent="handleSubmit">
             <v-text-field
                 label="Name of place"

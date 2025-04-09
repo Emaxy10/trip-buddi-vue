@@ -54,6 +54,9 @@
             Submit
         </v-btn>
         </v-form>
+        <v-snackbar v-model="snackbar" :timeout="3000" color="green">
+        {{ snackbarMessage }}
+    </v-snackbar>
     </v-sheet>
 </template>
 <script setup>
@@ -71,6 +74,8 @@ const place = ref({
 
 })
 
+const snackbar = ref(false)
+const snackbarMessage = ref('') //snackbar for alert
 
 const fileSizeLimit = helpers.withMessage(
   'File must be less than 2MB',
@@ -120,15 +125,33 @@ const handleSubmit = async() =>{
         loading.value = false
         return
     }
-    const newPlace ={
-        name: place.value.name,
-        description: place.value.description,
-        address: place.value.address,
-        category:place.value.category,
-        rating: 0,
-        image:place.value.image
+    const formData = new FormData()
+    formData.append('name', place.value.name)
+    formData.append('description', place.value.description)
+    formData.append('address', place.value.address)
+    formData.append('category', place.value.category)
+    formData.append('rating', 1)
+    formData.append('image', place.value.image) // <-- this is the key fix
+
+    const response = await axios.post('/api/places', formData, {
+    headers: {
+        'Content-Type': 'multipart/form-data',
     }
-    console.log(newPlace)
+    })
+
+     // Show success message
+     snackbarMessage.value = 'Place created successfully!'
+    snackbar.value = true
+    
+      // Reset form
+      place.value = {
+      name: '',
+      description: '',
+      category: '',
+      address: '',
+      image: null,
+    }
+    v$.value.$reset()
     }catch(error){
         console.error("An error occured", error)
     }finally{

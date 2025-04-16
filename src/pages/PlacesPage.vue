@@ -60,7 +60,7 @@ onMounted(async() => {
         <v-card-actions>
             <v-btn color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
     
-            <v-btn color="blue-grey-lighten-1" text="More"></v-btn>
+            <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
         </v-card-actions>
         </v-card>
     </v-col>

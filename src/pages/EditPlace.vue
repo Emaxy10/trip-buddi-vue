@@ -127,6 +127,7 @@ onMounted( async() => {
             category:place.value.category,
             address:place.value.address
         }
+        console.log(updatePlace)
         
         try{
             const reponse = await axios.put(`/api/places/${placeId.value}`,updatePlace)

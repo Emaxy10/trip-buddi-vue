@@ -13,6 +13,7 @@ import Page from '@/components/Page.vue'
 import AddPlace from '@/pages/AddPlace.vue'
 import PlacesPage from '@/pages/PlacesPage.vue'
 import EditPlace from '@/pages/EditPlace.vue'
+import PlacePage from '@/pages/PlacePage.vue'
 import { components } from 'vuetify/dist/vuetify-labs.js'
 
 const router = createRouter({
@@ -47,10 +48,15 @@ const router = createRouter({
     },
     {
       path:'/place',
-      name:'place',
+      name:'places',
       component: PlacesPage,
       
-    }
+    },{
+      path:'/place/:id',
+      name:'place',
+      component: PlacePage,
+      
+    },
   ],
 })
 

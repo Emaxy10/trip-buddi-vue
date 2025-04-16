@@ -1,4 +1,5 @@
 <template>
+  <v-container>
     <v-card
     class="mx-auto"
    
@@ -15,24 +16,44 @@
             cover
         >
         </v-img>
-
-    <v-card-text class="bg-surface-light pt-4">
-      <v-row>
-        <v-col cols="9">
-          <v-sheet class="pa-2 ma-2">
-            {{ place.description }}
-          </v-sheet>
-        </v-col>
-
-
-
-      </v-row>
-
-      <v-row>
-        
-      </v-row>
-    </v-card-text>
   </v-card>
+
+  <v-row>
+    <v-col cols="">
+      <v-card
+      class="mx-auto"
+   
+      width="800"
+      >
+        <v-list>
+          <v-list-subheader>{{ place.name }}</v-list-subheader>
+          <v-list-item
+            subtitle="About us"
+          >{{ place.description }}</v-list-item>
+          <v-list-item
+            subtitle="Category"
+          >{{ place.category }}</v-list-item>
+          <v-list-item
+            subtitle="Rating"
+          >
+          <v-rating
+          v-model="place.rating"
+          active-color="blue"
+          color="orange-lighten-1"
+          readonly
+        ></v-rating>
+
+          </v-list-item>
+
+       
+
+
+        </v-list>
+        
+      </v-card>
+    </v-col>
+  </v-row>
+</v-container>
 </template>
 
 <script setup>
@@ -44,7 +65,7 @@
 
   const route = useRoute();
 
- const placeId = ref([ route.params.id]);
+ const placeId = ref(route.params.id);
 
  const place = ref({});
 

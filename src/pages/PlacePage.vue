@@ -37,13 +37,18 @@
             subtitle="Rating"
           >
           <v-rating
-          v-model="place.rating"
+          v-model="rating.rating"
           active-color="blue"
           color="orange-lighten-1"
           readonly
         ></v-rating>
-
           </v-list-item>
+
+        <V-list-item
+          subtitle="Reviews"
+        >
+        
+        </V-list-item>
 
        
 
@@ -69,11 +74,17 @@
 
  const place = ref({});
 
+ const rating = ref({})
+
  onMounted(async() => {
     try{
         const response = await axios.get(`/api/places/${placeId.value}`)
         place.value = response.data
-        console.log(place.value)
+         console.log(place.value)
+
+        const ratingResopnse = await axios.get(`/api/places/${placeId.value}/rating`)
+        rating.value = ratingResopnse.data
+        console.log(rating.value);
     }catch(error){
         console.error("Failed to get Data", error);
     }

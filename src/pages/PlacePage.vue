@@ -44,11 +44,15 @@
         ></v-rating>
           </v-list-item>
 
-        <V-list-item
-          subtitle="Reviews"
-        >
-        
-        </V-list-item>
+          <v-list-subheader>Reviews</v-list-subheader>
+          <v-list-item
+            v-for="(review, index) in reviews"
+            :key="index"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{ review.comment }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
        
 
@@ -76,6 +80,8 @@
 
  const rating = ref({})
 
+ const reviews = ref([]);
+
  onMounted(async() => {
     try{
         const response = await axios.get(`/api/places/${placeId.value}`)
@@ -84,7 +90,13 @@
 
         const ratingResopnse = await axios.get(`/api/places/${placeId.value}/rating`)
         rating.value = ratingResopnse.data
-        console.log(rating.value);
+        //console.log(rating.value);
+
+        const reviewResponse = await axios.get(`/api/places/${placeId.value}/review`)
+        reviews.value = reviewResponse.data
+
+        console.log(reviews.value)
+
     }catch(error){
         console.error("Failed to get Data", error);
     }

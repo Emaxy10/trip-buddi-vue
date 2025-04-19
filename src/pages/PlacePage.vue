@@ -51,6 +51,15 @@
           >
             <v-list-item-content>
               <v-list-item-title>{{ review.comment }}</v-list-item-title>
+              <v-list-item-subtitle>
+                <v-rating
+                  v-model="review.rating"
+                  active-color="blue"
+                  size="x-small"
+                  color="orange-lighten-1"
+                  readonly
+                ></v-rating>
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -86,7 +95,7 @@
     try{
         const response = await axios.get(`/api/places/${placeId.value}`)
         place.value = response.data
-         console.log(place.value)
+         //console.log(place.value)
 
         const ratingResopnse = await axios.get(`/api/places/${placeId.value}/rating`)
         rating.value = ratingResopnse.data

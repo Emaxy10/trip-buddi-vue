@@ -7,7 +7,9 @@
   >
     <template v-slot:title>
       <span class="font-weight-black">{{place.name}}</span>
+      
     </template>
+    <v-btn class="mt-2 mr-3 position-absolute top-0 right-0" text="Book" color="orange"></v-btn>
 
     <v-img
             class="align-end text-white"
@@ -49,8 +51,13 @@
             v-for="(review, index) in reviews"
             :key="index"
           >
-            <v-list-item-content>
+
               <v-list-item-title>{{ review.comment }}</v-list-item-title>
+              <v-list-item-subtitle
+                color="orange-lighten-1"
+              >
+                - {{ review.user.name }}
+              </v-list-item-subtitle>
               <v-list-item-subtitle>
                 <v-rating
                   v-model="review.rating"
@@ -60,15 +67,38 @@
                   readonly
                 ></v-rating>
               </v-list-item-subtitle>
-            </v-list-item-content>
+              
           </v-list-item>
-
-       
-
 
         </v-list>
         
       </v-card>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col>
+        <v-form @submit.prevent="handleSubmit">
+           <v-sheet class="mx-auto" width="800">
+            <div class="text-center">
+             <h3 color="blue">Rate The Expirience -- </h3> <v-rating
+                v-model="userReview.rating"
+                active-color="blue"
+                hover
+              ></v-rating>
+            </div>
+                <v-textarea
+                v-model="userReview.comment"
+                 label="Leave a comment"></v-textarea>
+             <v-btn class="mt-2" type="submit"
+              color="blue"
+              block
+              size="large"
+              elevation="24"
+              >Comment
+            
+            </v-btn>
+           </v-sheet>
+        </v-form>
     </v-col>
   </v-row>
 </v-container>
@@ -91,6 +121,11 @@
 
  const reviews = ref([]);
 
+ const userReview = ref({
+  rating:'',
+  comment:''
+ })
+
  onMounted(async() => {
     try{
         const response = await axios.get(`/api/places/${placeId.value}`)
@@ -104,11 +139,30 @@
         const reviewResponse = await axios.get(`/api/places/${placeId.value}/review`)
         reviews.value = reviewResponse.data
 
-        console.log(reviews.value)
+        //console.log(reviews.value)
 
     }catch(error){
         console.error("Failed to get Data", error);
     }
 })
+
+const handleSubmit = async() => {
+      const review = {
+        user_id : 3,
+        place_id: placeId.value,
+        rating: userReview.value.rating,
+        comment:userReview.value.comment
+      }
+
+      //console.log(review);
+      try{
+        const response = await axios.post(`/api/review`, review)
+          console.timeStamp(response.data)
+          
+      }catch(error){
+        console.error("An error occured", error)
+      }
+      
+}
 
 </script>

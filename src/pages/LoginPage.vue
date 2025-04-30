@@ -19,6 +19,18 @@
                     block
                 ></v-btn>
                 <p v-if="errorMessage">{{ errorMessage }}</p>
+
+                <!-- Show loader when loading is true -->
+                <v-overlay v-model="loading" class="d-flex justify-center align-center" persistent>
+                    <v-progress-circular
+                    v-if="loading"
+                    :size="70"
+                    :width="10"
+                    color="amber"
+                    indeterminate
+                    ></v-progress-circular>
+                </v-overlay>
+            
         </v-form>
     </v-sheet>
 </template>
@@ -27,6 +39,11 @@
 import api from '@/api/axios';
 import { useAuthStore } from '@/stores/auth';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+
+const loading = ref(false)
 
 const authStore = useAuthStore()
 const user = ref({
@@ -36,6 +53,7 @@ const user = ref({
 const errorMessage = ref('');
 
 const handleSubmit = async () => {
+    loading.value = true
     try{
     const formData = new FormData()
     formData.append('email', user.value.email)
@@ -55,9 +73,13 @@ const handleSubmit = async () => {
     authStore.setUser(response.data.user)
 
     
-    console.log(authStore.user)
+    console.log(authStore.user?.name)
+
+    router.push('/')
     }catch(error){
         errorMessage.value = 'Login failed. Please check your credentials.';
+    }finally{
+        loading.value = false
     }
 }
 

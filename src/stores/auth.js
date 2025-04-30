@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth',{
         clearTokens(){
             this.accessToken = null;
             this.refreshToken = null;
+            this.user= null;
         },
         setUser(user){
             this.user = user

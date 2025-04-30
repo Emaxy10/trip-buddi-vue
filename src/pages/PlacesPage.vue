@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios';
 import {ref, onMounted} from 'vue'
-import { RouterLink } from 'vue-router';
+import { useAuthStore } from '@/stores/auth'
 
 
 // const places = async() =>{
@@ -26,6 +26,10 @@ onMounted(async() => {
     }
 })
 
+const handleSubmit = async() =>{
+
+}
+
 </script>
 <template>
 <v-row>
@@ -38,7 +42,7 @@ onMounted(async() => {
     >
         <v-card
         class="mx-auto"
-        max-width="250"
+        max-width="300"
         >
         <v-img
             class="align-end text-white"
@@ -61,6 +65,16 @@ onMounted(async() => {
             <v-btn color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
     
             <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
+            <v-form @submit.prevent="handleSubmit">
+                <input
+                    type="hidden"
+                    :value="place?.id"
+                ></input>
+
+
+                <v-btn color="green-accent-3">Favourite +</v-btn>
+            </v-form>
+            
         </v-card-actions>
         </v-card>
     </v-col>

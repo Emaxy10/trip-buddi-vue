@@ -1,20 +1,24 @@
+
+
 <script setup>
+//Put an error message if user alreadi have place as favourite
 import axios from 'axios';
 import {ref, onMounted} from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import api from '@/api/axios';
 
-
-// const places = async() =>{
-//     try{
-//         const response = await axios.get('/api/places')
-
-//         return response.data
-//     }catch(error){
-//         console.error(error)
-//     }
-// }
 
 const places = ref([])
+const authStore = useAuthStore()
+
+const loading = ref({})
+
+//Alert
+const success = ref(false)
+const successMessage = ref('')
+
+
+
 
 onMounted(async() => {
     try{
@@ -26,13 +30,47 @@ onMounted(async() => {
     }
 })
 
-const handleSubmit = async() =>{
+const handleSubmit = async(placeId) =>{
+    loading.value[placeId] = true
+   try{
+        if(authStore.accessToken){
+            const userId = authStore.user?.id
 
+            const formData = new FormData()
+
+            formData.append('user_id', userId )
+            formData.append('place_id', placeId )
+
+            const response = await api.post(`/places/favourite`, formData);
+
+            successMessage.value = 'Added to favourites!'
+             success.value = true
+
+            return response.data
+            // console.log(authStore.user?.name)
+            // console.log(userId)
+        }
+   }catch(error){
+    console.error(error)
+   }finally{
+    loading.value[placeId] = false
+   }
+   
+//   console.log('Submitted place ID:', placeId)
 }
 
 </script>
 <template>
 <v-row>
+    <v-snackbar
+  v-model="success"
+  color="green"
+  timeout="3000"
+  top
+>
+  {{ successMessage }}
+</v-snackbar>
+
     <v-col
         v-for="(place, index) in places"
         :key="index"
@@ -65,15 +103,14 @@ const handleSubmit = async() =>{
             <v-btn color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
     
             <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
-            <v-form @submit.prevent="handleSubmit">
-                <input
-                    type="hidden"
-                    :value="place?.id"
-                ></input>
+                <v-btn
+                :loading="loading[place.id]"
+                :disabled="loading[place.id]"
+                  @click="handleSubmit(place.id)"
+                color="green-accent-3"
+                type="submit">Favourite +</v-btn>
+          
 
-
-                <v-btn color="green-accent-3">Favourite +</v-btn>
-            </v-form>
             
         </v-card-actions>
         </v-card>

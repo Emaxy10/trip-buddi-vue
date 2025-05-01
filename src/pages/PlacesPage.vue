@@ -17,6 +17,9 @@ const loading = ref({})
 const success = ref(false)
 const successMessage = ref('')
 
+const failure = ref(false)
+const failureMessage = ref('')
+
 
 
 
@@ -43,14 +46,20 @@ const handleSubmit = async(placeId) =>{
 
             const response = await api.post(`/places/favourite`, formData);
 
-            successMessage.value = 'Added to favourites!'
-             success.value = true
+         
 
-            return response.data
-            // console.log(authStore.user?.name)
-            // console.log(userId)
+            if(response.data  && response.data.message === 'Already a favourite' ){
+                failure.value = true
+                 
+                 failureMessage.value = "An error occured"
+            }else{
+                successMessage.value = 'Added to favourites!'
+                success.value = true
+            }
         }
    }catch(error){
+    faliure.value = true;
+    failureMessage.value = "An error occured"
     console.error(error)
    }finally{
     loading.value[placeId] = false
@@ -69,6 +78,15 @@ const handleSubmit = async(placeId) =>{
   top
 >
   {{ successMessage }}
+</v-snackbar>
+
+<v-snackbar
+  v-model="failure"
+  color="red"
+  timeout="3000"
+  top
+>
+  {{ failureMessage }}
 </v-snackbar>
 
     <v-col

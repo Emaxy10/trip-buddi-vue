@@ -73,6 +73,17 @@
         </v-list>
         
       </v-card>
+
+      <v-card
+      class="mx-auto"
+      
+      width="800"
+      height="300"
+      >
+      <v-card-subtitle>Address: {{ place?.address }}</v-card-subtitle>
+      <div id="map" class="w-full h-screen"></div>
+
+      </v-card>
     </v-col>
   </v-row>
   <v-row>
@@ -107,8 +118,20 @@
 <script setup>
   import axios from 'axios';
   import {ref, onMounted} from 'vue'
-  import { RouterLink } from 'vue-router';
   import { useRoute} from 'vue-router';
+  import L from 'leaflet'
+
+  const geocodeAddress = async (address) => {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
+  const { data } = await axios.get(url)
+  if (data && data.length > 0) {
+    return {
+      lat: parseFloat(data[0].lat),
+      lng: parseFloat(data[0].lon),
+    }
+  }
+  return null
+}
 
 
   const route = useRoute();
@@ -127,10 +150,27 @@
  })
 
  onMounted(async() => {
+
+        const map = L.map('map').setView([6.5244, 3.3792], 13)
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map)
+
+      
     try{
         const response = await axios.get(`/api/places/${placeId.value}`)
         place.value = response.data
-         //console.log(place.value)
+
+        const coordinates = await geocodeAddress(place.value.address)
+
+        if(coordinates){
+          L.marker([coordinates.lat, coordinates.lng])
+            .addTo(map)
+            .bindPopup(`<strong>${place.value.name}</strong><br>${place.value.address}`)
+        }
+
+         //console.log(coordinates)
 
         const ratingResopnse = await axios.get(`/api/places/${placeId.value}/rating`)
         rating.value = ratingResopnse.data

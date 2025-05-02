@@ -51,7 +51,7 @@ const handleSubmit = async(placeId) =>{
             if(response.data  && response.data.message === 'Already a favourite' ){
                 failure.value = true
                  
-                 failureMessage.value = "An error occured"
+                 failureMessage.value = "Alreadi a favourite "
             }else{
                 successMessage.value = 'Added to favourites!'
                 success.value = true
@@ -71,6 +71,11 @@ const handleSubmit = async(placeId) =>{
 </script>
 <template>
 <v-row>
+    <v-col>
+        
+    </v-col>
+</v-row>
+<v-row>
     <v-snackbar
   v-model="success"
   color="green"
@@ -88,6 +93,7 @@ const handleSubmit = async(placeId) =>{
 >
   {{ failureMessage }}
 </v-snackbar>
+
 
     <v-col
         v-for="(place, index) in places"

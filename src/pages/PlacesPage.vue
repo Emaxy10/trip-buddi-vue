@@ -1,5 +1,3 @@
-
-
 <script setup>
 //Put an error message if user alreadi have place as favourite
 import axios from 'axios';

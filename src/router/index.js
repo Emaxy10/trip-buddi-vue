@@ -14,6 +14,7 @@ import AddPlace from '@/pages/AddPlace.vue'
 import PlacesPage from '@/pages/PlacesPage.vue'
 import EditPlace from '@/pages/EditPlace.vue'
 import PlacePage from '@/pages/PlacePage.vue'
+import SearchResults from '@/pages/SearchResults.vue'
 import { components } from 'vuetify/dist/vuetify-labs.js'
 
 const router = createRouter({
@@ -56,7 +57,11 @@ const router = createRouter({
       name:'place',
       component: PlacePage,
       
-    },
+    },{
+      path:'/search',
+      name:'search_results',
+      component: SearchResults
+    }
   ],
 })
 

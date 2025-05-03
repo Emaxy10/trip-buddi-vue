@@ -27,11 +27,24 @@
           </v-card-text>
   
           <v-card-actions>
+            <div v-if="user_roles.some(role => role.name == 'admin')">
+            <v-btn     
+                color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
+            </div>
+
+            <div v-else>
+                <v-btn
+                 color="orange" 
+                 text="Book"
+                ></v-btn>
+            </div>
             <v-btn
+              v-else
               color="orange"
-              text="Edit"
-              :to="'/place/edit/' + place?.id"
-            />
+              text="Book"
+            >
+
+            </v-btn>
             <v-btn
               color="blue-grey-lighten-1"
               text="More"
@@ -74,6 +87,7 @@
   })
   
   const authStore = useAuthStore()
+  const user_roles = ref(authStore.user?.roles)
   
   const success = ref(false)
   const failure = ref(false)

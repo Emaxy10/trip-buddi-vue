@@ -52,6 +52,7 @@
     <!-- Auth Links -->
     <div v-if="authStore.accessToken">
       <router-link to="/" @click.prevent="logout" style="color: white;" class="ml-4">Logout</router-link>
+      <router-link to="/profile"  style="color: white;" class="ml-4">Profile</router-link>
     </div>
     <div v-else>
       <router-link to="/login" style="color: white;" class="ml-4">Login</router-link>

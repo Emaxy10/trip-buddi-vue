@@ -18,6 +18,7 @@ const successMessage = ref('')
 const failure = ref(false)
 const failureMessage = ref('')
 
+const user_roles = ref(authStore.user?.roles)
 
 
 
@@ -122,7 +123,17 @@ const handleSubmit = async(placeId) =>{
         </v-card-text>
     
         <v-card-actions>
-            <v-btn color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
+            <div v-if="user_roles.some(role => role.name == 'admin')">
+            <v-btn     
+                color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
+            </div>
+
+            <div v-else>
+                <v-btn
+                 color="orange" 
+                 text="Book"
+                ></v-btn>
+            </div>
     
             <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
                 <v-btn

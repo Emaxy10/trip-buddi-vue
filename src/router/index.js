@@ -16,6 +16,7 @@ import EditPlace from '@/pages/EditPlace.vue'
 import PlacePage from '@/pages/PlacePage.vue'
 import SearchResults from '@/pages/SearchResults.vue'
 import { components } from 'vuetify/dist/vuetify-labs.js'
+import ProfilePage from '@/pages/ProfilePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,6 +62,10 @@ const router = createRouter({
       path:'/search',
       name:'search_results',
       component: SearchResults
+    },{
+        path:'/profile',
+        name:'profile',
+        component: ProfilePage
     }
   ],
 })

@@ -60,6 +60,8 @@ import { ref, reactive, computed, onMounted } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required,  minLength, maxLength, helpers } from '@vuelidate/validators'
 import { useRoute} from 'vue-router';
+import api from '@/api/axios';
+
 
 
 const route = useRoute();
@@ -103,7 +105,7 @@ const v$ = useVuelidate(rules, place)
 
 onMounted( async() => {
     try{
-        const response = await axios.get(`/api/places/${placeId.value}`)
+        const response = await api.get(`/places/${placeId.value}`)
         place.value = response.data;
         
 
@@ -130,7 +132,7 @@ onMounted( async() => {
         console.log(updatePlace)
         
         try{
-            const reponse = await axios.put(`/api/places/${placeId.value}`,updatePlace)
+            const reponse = await api.put(`/places/${placeId.value}`,updatePlace)
 
                     // Show success message
             snackbarMessage.value = 'Place Updated successfully!'

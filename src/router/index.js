@@ -17,6 +17,8 @@ import PlacePage from '@/pages/PlacePage.vue'
 import SearchResults from '@/pages/SearchResults.vue'
 import { components } from 'vuetify/dist/vuetify-labs.js'
 import ProfilePage from '@/pages/ProfilePage.vue'
+import FavouritesPage from '@/pages/FavouritesPage.vue'
+import Reviews from '@/components/Reviews.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,6 +68,14 @@ const router = createRouter({
         path:'/profile',
         name:'profile',
         component: ProfilePage
+    },{
+      path:'/favourites',
+      name:'favorites',
+      component: FavouritesPage
+    },{
+      path:'/reviews',
+      name:'reviews',
+      component: Reviews
     }
   ],
 })

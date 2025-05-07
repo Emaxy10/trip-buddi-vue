@@ -120,6 +120,14 @@
   import {ref, onMounted} from 'vue'
   import { useRoute} from 'vue-router';
   import L from 'leaflet'
+  import { useAuthStore } from '@/stores/auth';
+  import { useRouter } from 'vue-router'
+
+  const router = useRouter();
+
+  const authStore = useAuthStore();
+
+  const user_id = ref(authStore.user?.id)
 
   const geocodeAddress = async (address) => {
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
@@ -188,7 +196,7 @@
 
 const handleSubmit = async() => {
       const review = {
-        user_id : 3,
+        user_id : user_id.value,
         place_id: placeId.value,
         rating: userReview.value.rating,
         comment:userReview.value.comment
@@ -198,6 +206,8 @@ const handleSubmit = async() => {
       try{
         const response = await axios.post(`/api/review`, review)
           console.timeStamp(response.data)
+
+          router.push("/place")
           
       }catch(error){
         console.error("An error occured", error)

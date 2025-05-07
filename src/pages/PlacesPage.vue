@@ -67,6 +67,10 @@ const handleSubmit = async(placeId) =>{
 //   console.log('Submitted place ID:', placeId)
 }
 
+const deletePlace = async(placeId) =>{
+    
+}
+
 </script>
 <template>
 <v-row>
@@ -126,6 +130,9 @@ const handleSubmit = async(placeId) =>{
             <div v-if="user_roles.some(role => role.name == 'admin')">
             <v-btn     
                 color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
+
+                <v-btn     
+                color="red" text="Delete" :to="'/place/edit/' + place?.id"></v-btn>
             </div>
 
             <div v-else>
@@ -133,15 +140,19 @@ const handleSubmit = async(placeId) =>{
                  color="orange" 
                  text="Book"
                 ></v-btn>
-            </div>
-    
-            <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
+
+                
                 <v-btn
                 :loading="loading[place.id]"
                 :disabled="loading[place.id]"
                   @click="handleSubmit(place.id)"
                 color="green-accent-3"
                 type="submit">Favourite +</v-btn>
+            </div>
+
+            <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
+    
+
           
 
             

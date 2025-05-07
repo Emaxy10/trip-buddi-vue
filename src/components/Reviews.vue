@@ -4,10 +4,11 @@
       :key="index"
     >
     <v-card
-      class="mx-auto"
+      class="mx-auto mt-10"
       max-width="344"
-      max-height="250"
+      max-height="300"
       hover
+      color="#4A148C"
       
     >
       <v-card-item>
@@ -17,7 +18,7 @@
         <v-card-title
            class="text-orange-accent-4"
         >
-        {{ review.place.name }}
+        {{ review.place?.name }}
         </v-card-title>
       </v-card-item>
 
@@ -33,16 +34,12 @@
           readonly
         ></v-rating>
       </v-card-item>
-  
-      <v-card-text>
-          Comment: 
-        </v-card-text>
       <v-card-text class="text-orange-accent-4">
-        
-        {{ review.comment }}
+       <p class=" text-white"> Comment: </p> {{ review.comment }}
       </v-card-text>
     </v-card>
   </v-list-item>
+  
   </v-list>
   </template>
 

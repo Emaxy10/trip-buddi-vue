@@ -66,6 +66,7 @@
       </v-btn> -->
 
       <v-file-input
+      v-model="image"
       label="Select Image"
       accept="image/*"
       prepend-icon="mdi-camera"

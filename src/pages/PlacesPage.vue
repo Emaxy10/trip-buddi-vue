@@ -4,6 +4,10 @@ import axios from 'axios';
 import {ref, onMounted} from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/api/axios';
+import { useRouter } from 'vue-router'
+const searchQuery = ref('');
+
+const router = useRouter()
 
 
 const places = ref([])
@@ -71,11 +75,36 @@ const deletePlace = async(placeId) =>{
     
 }
 
+const performSearch = async() => {
+    if (!searchQuery.value.trim()) return;
+
+    try{
+       
+
+        router.push({ name: 'search_results', query: { q: searchQuery.value } });
+    }catch(error){
+        console.error('Search failed:', error);
+    }
+
+    console.log("Search button was clicked", searchQuery.value)
+}
+
 </script>
 <template>
-<v-row>
-    <v-col>
-        
+   <!-- Search -->
+<v-row class="justify-end">
+    <v-col  cols="12" sm="4">
+        <v-text-field
+      v-model="searchQuery"
+      append-icon="mdi-magnify"
+      label="Search places"
+      hide-details
+      single-line
+      dense
+      outlined
+      style="max-width: 250px;"
+      @keyup.enter="performSearch"
+    ></v-text-field>
     </v-col>
 </v-row>
 <v-row>

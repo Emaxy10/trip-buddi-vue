@@ -35,7 +35,7 @@
     >
       <v-tab value="1">Trips</v-tab>
       <v-tab value="2">Favourites</v-tab>
-      <v-tab value="3">Review</v-tab>
+      <v-tab value="3">Reviews</v-tab>
       <v-tab value="4">Photos</v-tab>
     </v-tabs>
 

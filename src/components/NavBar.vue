@@ -37,7 +37,7 @@
     <v-spacer></v-spacer>
 
     <!-- Search box -->
-    <v-text-field
+    <!-- <v-text-field
       v-model="searchQuery"
       append-icon="mdi-magnify"
       label="Search places"
@@ -47,7 +47,7 @@
       outlined
       style="max-width: 250px;"
       @keyup.enter="performSearch"
-    ></v-text-field>
+    ></v-text-field> -->
 
     <!-- Auth Links -->
     <div v-if="authStore.accessToken">
@@ -84,18 +84,18 @@ function logout() {
  
 }
 
-const performSearch = async() => {
-    if (!searchQuery.value.trim()) return;
+// const performSearch = async() => {
+//     if (!searchQuery.value.trim()) return;
 
-    try{
+//     try{
        
 
-        router.push({ name: 'search_results', query: { q: searchQuery.value } });
-    }catch(error){
-        console.error('Search failed:', error);
-    }
+//         router.push({ name: 'search_results', query: { q: searchQuery.value } });
+//     }catch(error){
+//         console.error('Search failed:', error);
+//     }
 
-    console.log("Search button was clicked", searchQuery.value)
-}
+//     console.log("Search button was clicked", searchQuery.value)
+// }
 
 </script>

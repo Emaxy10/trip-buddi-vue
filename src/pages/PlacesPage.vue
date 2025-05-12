@@ -79,8 +79,6 @@ const performSearch = async() => {
     if (!searchQuery.value.trim()) return;
 
     try{
-       
-
         router.push({ name: 'search_results', query: { q: searchQuery.value } });
     }catch(error){
         console.error('Search failed:', error);

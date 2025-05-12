@@ -42,19 +42,39 @@
 
 
         <td>
-            <v-btn color="red" icon>
+            <v-btn color="red" icon @click="deleteUser(user.id)">
                 <v-icon size="x-small">mdi-delete</v-icon>
             </v-btn>
+        </td>
+
+        <td>
+
+          <v-btn color="blue" icon>
+              <v-icon size="x-small">mdi-pencil</v-icon>
+          </v-btn>
         </td>
        </tr>
       </tbody>
     </v-table>
+        <!-- Show loader when loading is true -->
+        <v-overlay v-model="loading" class="d-flex justify-center align-center" persistent>
+                    <v-progress-linear
+                    v-if="loading"
+                     height="25"
+                    color="amber"
+                    indeterminate
+                    ></v-progress-linear>
+                </v-overlay>
   </template>
 
 <script setup>
     import { ref, onMounted } from 'vue';
     import { useAuthStore } from '@/stores/auth';
     import api from '@/api/axios';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+    const loading = ref(false);
     
 
     const users = ref([])
@@ -71,4 +91,16 @@
             console.error("an error occured", error)
         }
     })
+
+    const deleteUser = async(userID) =>{
+          loading.value = true
+      try{
+        const response = await api.delete(`/users/${userID}`)
+        router.go();
+      }catch(error){
+        console.error(error);
+      }finally{
+        loading.value = false
+      }
+    }
 </script>

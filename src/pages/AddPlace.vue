@@ -66,6 +66,7 @@ import axios from 'axios';
 import { ref, reactive, computed } from 'vue';
 import useVuelidate from '@vuelidate/core';
  import { required,  minLength, maxLength, helpers } from '@vuelidate/validators'
+import api from '@/api/axios';
 
 const place = ref({
     name:'',
@@ -135,7 +136,7 @@ const handleSubmit = async() =>{
     formData.append('rating', 1)
     formData.append('image', place.value.image) // <-- this is the key fix
 
-    const response = await axios.post('/api/places', formData, {
+    const response = await api.post('/api/places', formData, {
     headers: {
         'Content-Type': 'multipart/form-data',
     }

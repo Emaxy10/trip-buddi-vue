@@ -42,20 +42,52 @@
 
 
         <td>
-            <v-btn color="red" icon @click="deleteUser(user.id)">
+            <v-btn color="red" icon @click="snackbar = true ">
                 <v-icon size="x-small">mdi-delete</v-icon>
             </v-btn>
         </td>
 
         <td>
 
-          <v-btn color="blue" icon>
+          <v-btn color="blue" :to="'/users/edit/' + user?.id" icon>
               <v-icon size="x-small">mdi-pencil</v-icon>
           </v-btn>
         </td>
+
+        <v-snackbar
+      v-model="snackbar"
+      color="blue-lighten-5"
+      vertical
+    >
+      <div class="text-subtitle-1 pb-2">Proceed with this Action?</div>
+
+      <template v-slot:actions>
+        <v-btn
+        class="mr-5"
+          color="green-darken-4"
+          variant="text"
+          size="25"
+          @click="snackbar = false "
+        >
+         NO
+        </v-btn>
+        
+        <v-btn
+        class="mr-5"
+          color="red-accent-4"
+          variant="text"
+          size="25"
+          @click="  deleteUser(user.id)"
+        >
+         YES
+        </v-btn>
+      </template>
+    </v-snackbar>
        </tr>
       </tbody>
     </v-table>
+
+ 
         <!-- Show loader when loading is true -->
         <v-overlay v-model="loading" class="d-flex justify-center align-center" persistent>
                     <v-progress-linear
@@ -75,6 +107,7 @@
 
     const router = useRouter();
     const loading = ref(false);
+    const snackbar = ref(false)
     
 
     const users = ref([])

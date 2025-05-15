@@ -20,6 +20,7 @@ import ProfilePage from '@/pages/ProfilePage.vue'
 import FavouritesPage from '@/pages/FavouritesPage.vue'
 import Reviews from '@/components/Reviews.vue'
 import UsersPage from '@/pages/UsersPage.vue'
+import EditUser from '@/pages/EditUser.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,6 +82,10 @@ const router = createRouter({
       path:'/users',
       name:'users',
       component:UsersPage
+    },{
+      path: '/users/edit/:id',
+      name: 'edit-user',
+      component: EditUser
     }
   ],
 })

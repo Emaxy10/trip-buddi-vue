@@ -23,15 +23,18 @@
         <td>{{ user.email }}</td>
         <td>
             <v-chip
-                v-for="(role, rIndex) in user.roles"
-                :key="rIndex"
+                v-for="role in user.roles"
+                :key="role.id"
                 class="ma-1"
                 color="primary"
                 small
                 text-color="white"
+                closable
+                @click:close="removeRole(role.id, user?.id)"
             >
-                {{ role }}
+                {{ role.name }}
             </v-chip>
+            
         </td>
 
         <!-- <td>
@@ -119,7 +122,7 @@
             const response = await api.get('/users');
             users.value = response.data
 
-            console.log(response.data)
+            console.log(users.value)
         }catch(error){
             console.error("an error occured", error)
         }
@@ -135,5 +138,21 @@
       }finally{
         loading.value = false
       }
+    }
+
+    const removeRole = async(role, userId) =>{
+        try{
+            const response = await api.delete(`/users/role/remove/${userId}`, {
+              data: {role}
+
+            })
+
+            // console.log(userId,  role)
+
+           console.log('Role removed successfully:', response.data);
+          } catch (error) {
+            console.error('Error removing role:', error.response?.data || error.message);
+          }
+      
     }
 </script>

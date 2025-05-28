@@ -42,8 +42,8 @@ import { ref, onMounted } from 'vue';
     }else if(searchType.value === 'user'){
       const response = await api.get(`/users/search/${searchTerm.value}`)
       users.value = response.data
-      console.log(users.value)
+      // console.log(users.value)
     }
-    console.log(searchType.value);
+    // console.log(searchType.value);
   })
 </script>

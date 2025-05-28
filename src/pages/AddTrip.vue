@@ -11,6 +11,7 @@
             placeholder="Enter a destination"
             required
           />
+          <span v-if="v$.trip.destination.$error">Required</span>
         </div>
   
         <div class="form-group">
@@ -21,6 +22,9 @@
             v-model="trip.startDate"
             required
           />
+          <span v-if="v$.trip.startDate.$error">
+          {{ v$.trip.startDate.$errors[0].$message }}
+        </span>
         </div>
   
         <div class="form-group">
@@ -31,6 +35,9 @@
             v-model="trip.endDate"
             required
           />
+          <span v-if="v$.trip.endDate.$error">
+          {{ v$.trip.endDate.$errors[0].$message }}
+        </span>
         </div>
   
         <div class="form-group">
@@ -42,9 +49,11 @@
             min="1"
             required
           />
+
+          <span v-if="v$.trip.travelers.$error">Required</span>
         </div>
   
-        <button type="submit">Plan Trip</button>
+        <button type="submit" >Plan Trip</button>
       </form>
     </div>
   </template>
@@ -52,17 +61,82 @@
   <script setup>
   import { ref } from 'vue'
   import useVuelidate from '@vuelidate/core';
+  import { useRouter } from 'vue-router';
+  import { required, helpers }  from '@vuelidate/validators'
+
+
+  const router = useRouter()
   
   const trip = ref({
     destination: '',
     startDate: '',
     endDate: '',
-    travelers: 1
+    travelers: '',
   })
-  
-  const submitForm = () => {
-    console.log('Trip planned:', trip.value)
-    alert(`Trip to ${trip.value.destination} planned successfully!`)
+
+  // Define today's date (without time)
+const today = new Date()
+today.setHours(0, 0, 0, 0)
+
+// Custom validator: date must not be in the past
+
+const notPastDate = helpers.withMessage(
+    'Date must not be in the past',
+    (value) => {
+      if(!value) return false
+      const inputDate = new Date(value)
+      inputDate.setHours(0,0,0,0)
+      return inputDate >= today
+    }
+)
+
+// Custom validator: endDate must be after startDate
+const endDateAfterStartDate = helpers.withMessage(
+  'End date must be after start date',
+  function(value, vm){
+    if(!value || !vm.trip.value.startDate) return false
+    // return new Date(value) >= new Date(vm.trip.startDate)
+    console.log(vm.trip.startDate)
+  }
+)
+const rules = computed(() => ({
+  trip: {
+    destination: { required },
+    startDate: {
+      required,
+      notPastDate,
+    },
+    endDate: {
+      required,
+      notPastDate,
+    },
+    travelers: { required },
+  },
+}))
+
+const v$ = useVuelidate(rules,  {trip} )
+
+
+  const submitForm = async() => {
+    
+
+    try{
+         //Validate
+        const isValid = await v$.value.$validate();
+        if(!isValid){ 
+            return
+        }
+        console.log('Trip planned:', trip.value)
+        router.push({ name:"passenger", query:{q: trip.value}});
+
+      
+       
+
+
+    }catch(error){
+      console.error(error)
+    }
+   
   }
   </script>
   

@@ -22,6 +22,7 @@ import Reviews from '@/components/Reviews.vue'
 import UsersPage from '@/pages/UsersPage.vue'
 import EditUser from '@/pages/EditUser.vue'
 import AddTrip from '@/pages/AddTrip.vue'
+import Passenger from '@/pages/Passenger.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -91,6 +92,10 @@ const router = createRouter({
       path: '/add/trip',
       name: 'add-trip',
       component: AddTrip
+    },{
+      path: '/passenger',
+      name: 'passenger',
+      component: Passenger
     }
   ],
 })

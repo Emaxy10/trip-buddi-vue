@@ -24,6 +24,7 @@ import EditUser from '@/pages/EditUser.vue'
 import AddTrip from '@/pages/AddTrip.vue'
 import Passenger from '@/pages/Passenger.vue'
 import BookTripPage from '@/pages/BookTripPage.vue'
+import TripDetailsPage from '@/pages/TripDetailsPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -101,6 +102,10 @@ const router = createRouter({
       path: '/book-trip',
       name: 'book-trip',
       component: BookTripPage
+    },{
+      path: '/trip/details/',
+      name: 'trip-details',
+      component: TripDetailsPage
     }
   ],
 })

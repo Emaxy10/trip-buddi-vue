@@ -80,7 +80,7 @@
           <v-icon left>mdi-close</v-icon>
           NO
         </v-btn>
-        <v-btn class="mr-5" color="green-darken-4" variant="text" @click="confirmPayment">
+        <v-btn class="mr-5" color="green-darken-4" variant="text" @click="confirmPayment" :loading="loading">
           <v-icon left>mdi-check</v-icon>
           YES
         </v-btn>
@@ -97,6 +97,7 @@ import api from '@/api/axios';
 const route = useRoute();
 const router = useRouter();
 const snackbar = ref(false);
+const loading = ref(false);
 
 const destination = ref(route.query.destination || '');
 const address = ref(route.query.address || '');
@@ -111,6 +112,7 @@ function handlePay() {
 }
 
 const confirmPayment= async() => {
+  loading.value = true;
   // Here you would typically handle the payment logic
   // For now, we just log the payment confirmation
 try {
@@ -130,14 +132,19 @@ try {
           'Content-Type': 'multipart/form-data'
         }
       });
-
-
-
-      console.log('Payment confirmed for:', passengers.value);
       snackbar.value = false;
+
+      router.push({
+        name: 'trip-details',
+        query: {
+          passengers: passengers.value,
+       
+        }
+      });
   } catch (error) {
     console.error('Payment processing failed:', error);
     snackbar.value = false;
+    loading.value = false;
     return;
   }
   

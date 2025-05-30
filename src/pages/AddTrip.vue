@@ -118,7 +118,7 @@ const v$ = useVuelidate(rules,  {trip} )
 
 
   const submitForm = async() => {
-    
+    const trip_info = [];
 
     try{
          //Validate
@@ -126,12 +126,12 @@ const v$ = useVuelidate(rules,  {trip} )
         if(!isValid){ 
             return
         }
-        console.log('Trip planned:', trip.value)
-        router.push({ name:"passenger", query:{q: trip.value}});
+
+     
+        router.push({ name:"passenger", query:trip.value});
 
       
-       
-
+  
 
     }catch(error){
       console.error(error)

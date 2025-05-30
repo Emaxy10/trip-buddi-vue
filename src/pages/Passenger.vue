@@ -132,6 +132,8 @@
       name: 'book-trip',
       query: {
         destination: tripInfo.value.destination,
+        startDate: tripInfo.value.startDate,
+        endDate: tripInfo.value.endDate,
         id:destination.value[0].id,
         address:destination.value[0].address,
         passengers: encodeURIComponent(JSON.stringify(passengers.value))

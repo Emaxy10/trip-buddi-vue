@@ -137,7 +137,11 @@ try {
       router.push({
         name: 'trip-details',
         query: {
-          passengers: passengers.value,
+          passengers: encodeURIComponent(JSON.stringify(passengers.value)),
+          destination: destination.value,
+          address: address.value,
+          startDate: startDate.value,
+          endDate: endDate.value,
        
         }
       });

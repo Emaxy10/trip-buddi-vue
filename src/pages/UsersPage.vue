@@ -20,7 +20,7 @@ onMounted(async () => {
     const response = await api.get('/users');
     users.value = response.data;
   } catch (error) {
-    console.error('An error occurred:', error);
+    console.error('An error occurred:',  error.response?.data ?? error.message);
   }
 });
 

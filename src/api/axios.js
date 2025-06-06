@@ -26,6 +26,7 @@ api.interceptors.response.use(
 
   error => {
     if(error.response && error.response.status === 401){
+      console.log(error.response);
       //clear tokens
       const authStore = useAuthStore();
       authStore.clearTokens(); //

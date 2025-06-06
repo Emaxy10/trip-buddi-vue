@@ -73,7 +73,7 @@ const handleSubmit = async () => {
     authStore.setUser(response.data.user)
 
     
-    console.log(authStore.user?.id)
+    console.log(response.data)
 
     router.push('/')
     }catch(error){

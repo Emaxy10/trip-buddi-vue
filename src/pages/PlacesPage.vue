@@ -24,6 +24,8 @@ const failureMessage = ref('')
 
 const user_roles = ref(authStore.user?.roles)
 
+console.log(authStore.user)
+
 
 
 onMounted(async() => {

@@ -1,5 +1,12 @@
 <template>
     <v-container >
+      <!-- <v-row>
+        <v-col cols="12">
+
+          <v-skeleton-loader type="card" :loading="loading"></v-skeleton-loader>
+        </v-col>
+         
+      </v-row> -->
       <v-row>
         <v-col cols="12">
           <h1 class="text-h5 font-weight-bold">Passenger Info</h1>
@@ -128,6 +135,8 @@
     // alert('Passenger data submitted. Check console for output.')
     // console.log(destination.value[0].address)
 
+
+
     router.push({
       name: 'book-trip',
       query: {
@@ -142,7 +151,8 @@
   }
   
   onMounted(async () => {
-        
+        loading.value = true
+    // Fetch destination data based on the tripInfo destination
     try {
       const response = await api.get(`/places/search/${tripInfo.value.destination}`)
       destination.value = response.data
@@ -156,7 +166,9 @@
   
     } catch (error) {
       console.error('Failed to fetch destination:', error)
-      count.value = 0
+
+    }finally {
+      loading.value = false
     }
   })
   </script>

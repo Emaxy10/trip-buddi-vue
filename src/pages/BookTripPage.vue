@@ -132,19 +132,27 @@ try {
           'Content-Type': 'multipart/form-data'
         }
       });
+
+      if (response.data.error) {
+          alert('This trip has already been booked . Please select another trip.');
+      }else{
+        
+        router.push({
+          name: 'trip-details',
+          query: {
+            passengers: encodeURIComponent(JSON.stringify(passengers.value)),
+            destination: destination.value,
+            address: address.value,
+            startDate: startDate.value,
+            endDate: endDate.value,
+        
+          }
+        });
+      }
+
+      console.log( response.data.error);
       snackbar.value = false;
 
-      router.push({
-        name: 'trip-details',
-        query: {
-          passengers: encodeURIComponent(JSON.stringify(passengers.value)),
-          destination: destination.value,
-          address: address.value,
-          startDate: startDate.value,
-          endDate: endDate.value,
-       
-        }
-      });
   } catch (error) {
     console.error('Payment processing failed:', error);
     snackbar.value = false;

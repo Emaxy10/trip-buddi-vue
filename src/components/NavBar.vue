@@ -26,7 +26,7 @@
     <!-- Navigation Links -->
     <v-row class="ml-4" align="center" no-gutters>
       <v-col class="mr-2" cols="auto">
-        <router-link to="/place/add" style="color: white;">Add a Place</router-link>
+        <router-link to="#" style="color: white;">About Us</router-link>
       </v-col>
       <v-col cols="auto">
         <router-link to="/place" style="color: white;">Places</router-link>

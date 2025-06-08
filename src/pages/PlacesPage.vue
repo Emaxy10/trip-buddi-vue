@@ -13,7 +13,7 @@ const router = useRouter()
 const places = ref([])
 const authStore = useAuthStore()
 
-const loading = ref({})
+const loading = ref(false)
 
 //Alert
 const success = ref(false)
@@ -29,12 +29,16 @@ console.log(authStore.user)
 
 
 onMounted(async() => {
+    loading.value = true
     try{
         const response = await axios.get('/api/places')
         places.value = response.data
         console.log(places.value)
     }catch(error){
+        loading.value = false
         console.error("Failed to get Data", error);
+    }finally{
+        loading.value = false
     }
 })
 
@@ -93,7 +97,22 @@ const performSearch = async() => {
 <template>
    <!-- Search -->
 <v-row class="justify-end">
-    <v-col  cols="12" sm="4">
+    <v-col 
+    cols="6"
+     v-if="user_roles.some(role => role.name === 'admin' || role.name === 'manager')"
+     
+     >
+        
+        <v-btn
+         color="blue-grey-lighten-1"
+         rounded="lg" size="large" 
+         :to ="'/place/add'"
+         :loading="loading"
+         :disabled="loading"
+        >Add Place</v-btn>
+    
+    </v-col>
+    <v-col  cols="6" sm="4">
         <v-text-field
       v-model="searchQuery"
       append-icon="mdi-magnify"

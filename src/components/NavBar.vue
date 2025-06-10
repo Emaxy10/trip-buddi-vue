@@ -28,8 +28,11 @@
       <v-col class="mr-2" cols="auto">
         <router-link to="#" style="color: white;">About Us</router-link>
       </v-col>
-      <v-col cols="auto">
+      <v-col cols="auto" class="mr-2">
         <router-link to="/place" style="color: white;">Places</router-link>
+      </v-col>
+      <v-col cols="auto">
+        <router-link to="/add/trip" style="color: white;">Trips</router-link>
       </v-col>
     </v-row>
 

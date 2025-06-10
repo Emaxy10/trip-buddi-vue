@@ -93,6 +93,12 @@
  import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue';
 import api from '@/api/axios';
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+console.log(authStore.user?.id)
+
+const user_id = authStore.user?.id
 
 const route = useRoute();
 const router = useRouter();
@@ -118,6 +124,8 @@ const confirmPayment= async() => {
 try {
         // Simulate payment processing
       const formData = new FormData();
+      // formData.append('user_id', user_id !== undefined ? user_id : null)
+      formData.append('user_id', Number.isInteger(user_id) ? user_id : '');
       formData.append('place_id', destination_id.value);
       formData.append('destination', destination.value);
       formData.append('start_date', startDate.value);

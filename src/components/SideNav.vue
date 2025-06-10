@@ -10,7 +10,11 @@
         </v-list-item>
         
         <v-list-item link title="List Item 3"></v-list-item>
-        <v-list-item link title="Add a Trip" to="/add/trip"></v-list-item>
+        <!-- <v-list-item link title="Add a Trip" to="/add/trip"></v-list-item> -->
       </v-list>
     </v-navigation-drawer>
 </template>
+
+<script setup>
+ 
+</script>

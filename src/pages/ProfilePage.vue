@@ -44,6 +44,12 @@
     <!-- Tab content -->
 
     <v-card-item>
+      <v-tabs-window  v-model="tab">
+            <v-tabs-window-item value="1">
+                <TripsPage/>
+            </v-tabs-window-item>
+        </v-tabs-window>
+
         <v-tabs-window  v-model="tab">
             <v-tabs-window-item value="2">
                 <FavouritesPage />
@@ -90,6 +96,7 @@
   import { useAuthStore } from '@/stores/auth'
   import FavouritesPage from './FavouritesPage.vue';
   import Reviews from '@/components/Reviews.vue';
+  import TripsPage from './TripsPage.vue';
 
   const authStore = useAuthStore();
 

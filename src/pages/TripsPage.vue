@@ -10,31 +10,34 @@
         >
           <v-card class="mx-auto my-4" elevation="4">
             <v-img
-              :src="trip.destinationImage"
+              :src="trip.place?.image"
               height="200px"
               cover
             ></v-img>
   
             <v-card-title class="text-h6">
-              {{ trip.destinationName }}
+              {{ trip.place?.name }}
             </v-card-title>
   
             <v-card-subtitle class="text-subtitle-1">
-              Passenger: {{ trip.passengerName }}
+              Passengers:
+                <ul>
+                 <li v-for="passenger in trip.passengers" :key="passenger">{{ passenger }}</li>
+                </ul>
             </v-card-subtitle>
   
             <v-card-text>
               <div class="mb-2">
                 <v-icon icon="mdi-map-marker" class="mr-1" />
-                {{ trip.address }}
+                {{ trip.place?.address }}
               </div>
               <div>
                 <v-icon icon="mdi-calendar-start" class="mr-1" />
-                Start Date: {{ trip.startDate }}
+                Start Date: {{ trip.start_date }}
               </div>
               <div>
                 <v-icon icon="mdi-calendar-end" class="mr-1" />
-                End Date: {{ trip.endDate }}
+                End Date: {{ trip.end_date }}
               </div>
             </v-card-text>
           </v-card>
@@ -46,24 +49,51 @@
   <script setup>
   import { ref, onMounted} from 'vue'
   import api from '@/api/axios';
-  const trips = [
-    {
-      passengerName: 'Emmanuel Iroawula',
-      destinationName: 'Obudu Mountain Resort',
-      address: 'Obanliku, Cross River, Nigeria',
-      destinationImage: 'https://example.com/obudu-resort.jpg',
-      startDate: '2025-06-15',
-      endDate: '2025-06-20'
-    },
-    {
-      passengerName: 'Tochukwu Iroawula',
-      destinationName: 'Obudu Mountain Resort',
-      address: 'Obanliku, Cross River, Nigeria',
-      destinationImage: 'https://example.com/obudu-resort.jpg',
-      startDate: '2025-06-15',
-      endDate: '2025-06-20'
-    }
-  ]
+  import { useAuthStore } from '@/stores/auth';
+
+  const trips = ref([])
+
+  const authStore = useAuthStore();
+
+  const user_id = ref(authStore.user?.id)
+
+
+
+  
+  onMounted( async()=>{
+
+    const response = await api.get(`/trips/user/${user_id.value}`)
+    const rawTrips = response.data.trips;
+
+     const groupedTrips = [];
+
+        rawTrips.forEach(trip => {
+        const existingTrip = groupedTrips.find(t =>
+          t.place_id === trip.place_id &&
+          t.destination === trip.destination &&
+          t.start_date === trip.start_date &&
+          t.end_date === trip.end_date
+        );
+
+        if (existingTrip) {
+          existingTrip.passengers.push(trip.passenger_name);
+        } else {
+          groupedTrips.push({
+            place_id: trip.place_id,
+            destination: trip.destination,
+            start_date: trip.start_date,
+            end_date: trip.end_date,
+            place: trip.place,
+            passengers: [trip.passenger_name]
+          });
+        }
+      });
+
+      trips.value = groupedTrips;
+
+      console.log(trips.value);
+  })
+
   </script>
   
   <style scoped>

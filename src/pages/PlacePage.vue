@@ -56,7 +56,7 @@
               <v-list-item-subtitle
                 color="orange-lighten-1"
               >
-                - {{ review.user.name }}
+                - {{ review.user?.name }}
               </v-list-item-subtitle>
               <v-list-item-subtitle>
                 <v-rating

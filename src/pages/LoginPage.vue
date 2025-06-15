@@ -72,9 +72,6 @@ const handleSubmit = async () => {
 
     authStore.setUser(response.data.user)
 
-    
-    console.log(response.data)
-
     router.push('/')
     }catch(error){
         errorMessage.value = 'Login failed. Please check your credentials.';

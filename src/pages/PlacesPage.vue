@@ -67,7 +67,7 @@ const handleSubmit = async(placeId) =>{
             }
         }
    }catch(error){
-    faliure.value = true;
+    failure.value = true;
     failureMessage.value = "An error occured"
     console.error(error)
    }finally{
@@ -77,6 +77,11 @@ const handleSubmit = async(placeId) =>{
 //   console.log('Submitted place ID:', placeId)
 }
 
+const bookPassenger = (place_name) =>{
+    router.push({ name:'add-trip', query:{
+         place_name
+    }})
+}
 const deletePlace = async(placeId) =>{
     
 }
@@ -99,7 +104,7 @@ const performSearch = async() => {
 <v-row class="justify-end">
     <v-col 
     cols="6"
-     v-if="user_roles.some(role => role.name === 'admin' || role.name === 'manager')"
+     v-if="user_roles?.some(role => role.name === 'admin' || role.name === 'manager')"
      
      >
         
@@ -174,8 +179,8 @@ const performSearch = async() => {
             <div>{{  place.description }}</div>
         </v-card-text>
     
-        <v-card-actions>
-            <div v-if="user_roles.some(role => role.name == 'admin')">
+        <!-- <v-card-actions v-if="user_roles">
+            <div v-if="user_roles?.some(role => role.name == 'admin')">
             <v-btn     
                 color="orange" text="Edit" :to="'/place/edit/' + place?.id"></v-btn>
 
@@ -183,7 +188,7 @@ const performSearch = async() => {
                 color="red" text="Delete" :to="'/place/edit/' + place?.id"></v-btn>
             </div>
 
-            <div v-else>
+            <div v-else  v-if="!user_roles">
                 <v-btn
                  color="orange" 
                  text="Book"
@@ -198,13 +203,40 @@ const performSearch = async() => {
                 type="submit">Favourite +</v-btn>
             </div>
 
-            <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
+            <v-btn
+             v-if="!user_roles"
+             color="blue-grey-lighten-1" text="More" :to="'/place/' + place?.id"></v-btn>
     
 
           
 
             
+        </v-card-actions> -->
+
+        <v-card-actions>
+            <template v-if="user_roles?.some(role => role.name === 'admin')">
+                <v-btn color="orange" text="Edit" :to="'/place/edit/' + place.id"></v-btn>
+                <v-btn color="red" text="Delete" :to="'/place/edit/' + place.id"></v-btn>
+            </template>
+
+            <template v-else-if="user_roles">
+               
+                <v-btn
+                :loading="loading[place.id]"
+                :disabled="loading[place.id]"
+                @click="handleSubmit(place.id)"
+                color="green-accent-3"
+                type="submit"
+                >
+                Favourite +
+                </v-btn>
+                
+            </template>
+            <v-btn color="orange" text="Book" @click='bookPassenger(place.name)'></v-btn>
+            <v-btn color="blue-grey-lighten-1" text="More" :to="'/place/' + place.id"></v-btn>
         </v-card-actions>
+
+
         </v-card>
     </v-col>
 </v-row>

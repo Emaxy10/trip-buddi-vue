@@ -27,17 +27,18 @@
 
 <script setup>
 import axios from 'axios';
+import api from '@/api/axios'
 import {ref, onMounted} from 'vue'
 
 
-onMounted( async() =>{
-    try{
-        const response = await axios.get('/api/places')
-    //    console.log(response.data) 
-    }catch(error){
-        console.error(error)
-    }
-})
+// onMounted( async() =>{
+//     try{
+//         const response = await api.get('/api/places')
+//     //    console.log(response.data) 
+//     }catch(error){
+//         console.error(error)
+//     }
+// })
 
 
 </script>

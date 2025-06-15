@@ -59,13 +59,18 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import useVuelidate from '@vuelidate/core';
-  import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
   import { required, helpers }  from '@vuelidate/validators'
 
 
   const router = useRouter()
+  const route = useRoute()
+
+  const place_name = ref( route.query.place_name || '')
+
+  console.log(place_name.value)
   
   const trip = ref({
     destination: '',
@@ -116,7 +121,11 @@ const rules = computed(() => ({
 
 const v$ = useVuelidate(rules,  {trip} )
 
-
+onMounted(() => {
+  if (place_name.value.trim() !== '') {
+    trip.value.destination = place_name.value
+  }
+})
   const submitForm = async() => {
     const trip_info = [];
 
